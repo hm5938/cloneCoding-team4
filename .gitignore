@@ -4,7 +4,10 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-/src/main/resources/application.properties
+/src/main/resources/application-JWT-SECRET.properties
+/src/main/resources/application-DB-URL.properties
+/src/main/resources/application-DB-USERNAME.properties
+/src/main/resources/application-DB-PASSWORD.properties
 ### STS ###
 .apt_generated
 .classpath
