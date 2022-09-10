@@ -8,9 +8,10 @@ import org.hibernate.Hibernate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
-@Setter
+
 @Getter
 @Builder
 @NoArgsConstructor
@@ -25,16 +26,42 @@ public class Member extends Timestamped {
     @Column(nullable = false)
     private String username;
 
-
     @Column(nullable = false)
-    @JsonIgnore
+    private String nickname;
+
+    @Column()
+    private String imageUrl;
+
+    @Column()
+    private String bio;
+    @Column(nullable = false)
     private String password;
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "member", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Heart> hearts;
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "member", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<ReTwit> reTwits;
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "member", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Twit> twits;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "follower")
+    @JsonIgnore
+    private List<Follow> followers;
+
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "following", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Follow> followings;
 
     public Member(MemberReqDto memberReqDto){
         this.username = memberReqDto.getUsername();
         this.password = memberReqDto.getPassword();
     }
-
 
     @Override
     public boolean equals(Object o) {
